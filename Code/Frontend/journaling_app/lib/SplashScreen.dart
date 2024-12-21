@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
@@ -16,12 +17,23 @@ class _SplashScreenStartState extends State<SplashScreen> {
 
   @override
   void initState() {
-    super.initState();
+    super.initState(); // Ensure this is called before async tasks
+    _delay();
+  }
+
+  Future<void> _delay() async {
+    // Delay for 5 seconds and then navigate to LoginScreen
     Future.delayed(
       Duration(seconds: 5),
-      () => Navigator.pushReplacement(context,MaterialPageRoute(builder: (context) => LoginScreen()))
+          () => Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => LoginScreen()),
+      ),
     );
   }
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

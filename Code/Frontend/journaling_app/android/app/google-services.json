@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "515101869287",
+    "project_id": "journaling-a50de",
+    "storage_bucket": "journaling-a50de.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:515101869287:android:fb1b06fa2e5545eca0ce42",
+        "android_client_info": {
+          "package_name": "com.example.journaling_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "515101869287-fdptpvokm9ujju1h1df6f9eo3jp8l0vd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.journaling_app",
+            "certificate_hash": "084f766d64f653e1dbb5e3fa31ac5f015b067be2"
+          }
+        },
+        {
+          "client_id": "515101869287-nsq3j02i581lcfebc504v8pen9m1r2bp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDOm8vMrPXD87MZPjW0l5yc5LW-IILTq1M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "515101869287-nsq3j02i581lcfebc504v8pen9m1r2bp.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "515101869287-n76qtg8gcahvm81li2pc18m8ijctes02.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.journalingApp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

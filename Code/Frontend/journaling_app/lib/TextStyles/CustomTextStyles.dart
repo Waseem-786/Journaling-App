@@ -26,11 +26,21 @@ class CustomTextStyles {
     );
   }
 
-  static TextStyle HeadingTextStyle() {
+  static TextStyle HeadingTextStyle({Color? textColor}) {
     return TextStyle(
         fontSize: 40,
-        color: Colors.purple,
+        color: textColor ?? Colors.white,
         fontWeight: FontWeight.w800,
+        fontFamily: 'Times new Roman'
+    );
+  }
+
+  static TextStyle MessageTextStyle({Color? textColor}) {
+    return TextStyle(
+        fontSize: 14,
+        decoration: TextDecoration.underline,
+        color: textColor ?? Colors.black,
+        fontWeight: FontWeight.bold,
         fontFamily: 'Times new Roman'
     );
   }

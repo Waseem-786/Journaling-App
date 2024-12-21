@@ -1,86 +1,22 @@
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:journaling_app/Custom_Widgets/ButtonBloc.dart';
-import 'package:journaling_app/Custom_Widgets/Button_Custom.dart';
-import 'package:journaling_app/Custom_Widgets/TextFormField_Custom.dart';
-import 'package:journaling_app/SignupScreen.dart';
-import 'package:journaling_app/SplashScreen.dart';
-import 'package:journaling_app/TextStyles/CustomTextStyles.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+import 'Custom_Widgets/ButtonBloc.dart';
+import 'Custom_Widgets/Button_Custom.dart';
+import 'Custom_Widgets/TextFormField_Custom.dart';
+import 'LoginScreen.dart';
+import 'TextStyles/CustomTextStyles.dart';
 
+class SignupScreen extends StatefulWidget {
+  const SignupScreen({super.key});
   @override
-  _LoginScreenState createState() => _LoginScreenState();
+  State<SignupScreen> createState() => _SignupScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _SignupScreenState extends State<SignupScreen> {
   late TextEditingController username = TextEditingController();
   late TextEditingController password = TextEditingController();
-  final ButtonBloc _buttonBloc = ButtonBloc();
-  final ButtonBloc _googlebuttonBloc = ButtonBloc();
-  final GoogleSignIn _googleSignIn = GoogleSignIn(
-    scopes: <String>['email'],
-  );
-
-  // Google Sign-In handler
-  Future<void> _handleGoogleSignIn() async {
-    try {
-      print("Attempting Google Sign-In...");
-      // Attempt to sign in with Google
-      GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
-      print("Google User: $googleUser");
-
-      if (googleUser != null) {
-        // Step 2: Obtain the Google Sign-In authentication details
-        GoogleSignInAuthentication googleAuth = await googleUser.authentication;
-        print("Google Auth: $googleAuth");
-
-        // Step 3: Create a new Firebase credential using the Google access token and ID token
-        final AuthCredential credential = GoogleAuthProvider.credential(
-          accessToken: googleAuth.accessToken,
-          idToken: googleAuth.idToken,
-        );
-
-        print("Firebase Credential: $credential");
-
-        // Step 4: Sign in to Firebase with the credential
-        UserCredential userCredential = await FirebaseAuth.instance.signInWithCredential(credential);
-        print("User Credential: $userCredential");
-
-        // Step 5: Check if the user is successfully signed in
-        User? user = userCredential.user;
-        print("User: $user");
-
-        if (user != null) {
-          // Sign-in successful, proceed to the next screen
-          print("Google Sign-In successful: ${user.displayName}");
-
-          // You can now navigate to your home screen or other screens.
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => SplashScreen()), // Replace with your home screen
-          );
-        }
-      } else {
-        // User canceled the sign-in
-        print("Google sign-in canceled");
-      }
-    } catch (error) {
-      print("Google sign-in failed: $error");
-      showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-          title: Text("Sign-In Error"),
-          content: Text("Google sign-in failed. Please try again. Error: $error"),
-          actions: [
-            TextButton(onPressed: () => Navigator.pop(context), child: Text("OK")),
-          ],
-        ),
-      );
-    }
-  }
+  final ButtonBloc _createAccountButtonBloc = ButtonBloc();
 
   @override
   Widget build(BuildContext context) {
@@ -110,7 +46,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: Container(
                     width: double.infinity,
                     child: Text(
-                      "Sign In",
+                      "Sign Up",
                       style: CustomTextStyles.HeadingTextStyle(),
                     ),
                   ),
@@ -154,11 +90,11 @@ class _LoginScreenState extends State<LoginScreen> {
 
                               // Use Button_Custom with Bloc
                               Button_Custom(
-                                buttonBloc: _buttonBloc, // Passing the ButtonBloc instance
-                                ButtonText: 'Sign In',
+                                buttonBloc: _createAccountButtonBloc, // Passing the ButtonBloc instance
+                                ButtonText: 'Sign Up',
                                 onPressed: () {
                                   // Trigger the action in the ButtonBloc
-                                  _buttonBloc.simulateAsyncAction(1); // Simulate success or failure
+                                  _createAccountButtonBloc.simulateAsyncAction(1); // Simulate success or failure
                                 },
                                 width: double.infinity,
                                 icon: Icons.install_desktop,
@@ -166,35 +102,21 @@ class _LoginScreenState extends State<LoginScreen> {
                               ),
 
                               SizedBox(height: 20,),
-                              // Use Button_Custom with Bloc
-                              Button_Custom(
-                                buttonBloc: _googlebuttonBloc,  // Passing the ButtonBloc instance
-                                ButtonText: 'Sign up with Google',
-                                onPressed: () {
-                                  // Trigger the action in the ButtonBloc
-                                  _handleGoogleSignIn();
-                                  _googlebuttonBloc.simulateAsyncAction(1); // Simulate success or failure
-                                },
-                                width: double.infinity,
-                                imagePath: "assets/images/google_logo.png",
-                                iconColor: Colors.white,
-                              ),
                               SizedBox(height: 10),
                               RichText(
                                 text: TextSpan(
-                                  style: CustomTextStyles.MessageTextStyle(textColor: Colors.black), // Default style
                                   children: [
-                                    TextSpan(text: "Don't have an account? "),
+                                    TextSpan(text: "Already have an account? ", style: CustomTextStyles.MessageTextStyle(textColor: Colors.black)),
                                     WidgetSpan(
                                       child: InkWell(
                                         onTap: () {
                                           Navigator.push(
                                             context,
-                                            MaterialPageRoute(builder: (context) => SignupScreen()),
+                                            MaterialPageRoute(builder: (context) => LoginScreen()),
                                           );
                                         },
                                         child: Text(
-                                          "Register here!",
+                                          "Login here!",
                                           style: CustomTextStyles.MessageTextStyle(textColor: Colors.blueAccent), // Apply blue color to the second part
                                         ),
                                       ),
@@ -220,9 +142,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   void dispose() {
     username.dispose();
-    password.dispose();
-    _buttonBloc.close();  // Close the Bloc when the screen is disposed
-    _googlebuttonBloc.close();
+    _createAccountButtonBloc.close();  // Close the Bloc when the screen is disposed
     super.dispose();
   }
 }

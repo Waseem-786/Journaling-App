@@ -45,7 +45,7 @@ class TextFormField_Custom extends StatelessWidget {
         hintText: hintText,
         hintStyle: CustomTextStyles.HintTextStyle(),
         error: error,
-        errorStyle: CustomTextStyles.ErrorTextStyle(),
+        errorStyle: CustomTextStyles.ErrorTextStyle(fontSize: 14),
         errorText: errorText,
         // errorBorder: ,
         suffix: suffixIcon,
